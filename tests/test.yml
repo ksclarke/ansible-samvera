@@ -3,7 +3,7 @@
   connection: local
   become: true
   roles:
-    # - { role: ../roles/packages }
+    - { role: ../roles/packages }
     - { role: ../roles/set_timezone, timezone: America/Chicago }
     # - { role: ../roles/set_hostname, hostname: 'demo', domain: 'curationexperts.com' }
     # - { role: ../roles/sshd_config }

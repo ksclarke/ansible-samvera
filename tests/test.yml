@@ -3,17 +3,17 @@
   connection: local
   become: true
   roles:
-    - { role: ../roles/packages }
+    # - { role: ../roles/packages }
     - { role: ../roles/set_timezone, timezone: America/Chicago }
-    - { role: ../roles/set_hostname, hostname: 'demo', domain: 'curationexperts.com' }
-    - { role: ../roles/sshd_config }
-    - { role: ../roles/setup_logrotation }
-    - { role: ../roles/ruby, ruby_ver: '2.4.2', ruby_major_minor_ver: '2.4', ruby_sha_256: '93b9e75e00b262bc4def6b26b7ae8717efc252c47154abb7392e54357e6c8c9c' }
-    - { role: ../roles/fedora, fedora_version: '4.7.1' }
-    - { role: ../roles/solr, solr_version: '6.6.2' }
-    - { role: ../roles/fits, fits_version: '0.8.4' }
-    - { role: ../roles/postgres, postgres_pass: 'G{BkCZ7^fsDg2su' }
-    - { role: ../roles/apache, passenger_ver: '5.1.11'}
-    - { role: ../roles/imagemagick, imagemagick_ver: '7.0.7-9', gs_ver: '9.19', openjpg_ver: '2.1.0', libtiff_ver: '4.0.5', libpng_ver: '1.6.28' }
-    - { role: ../roles/ffmpeg, ffmpeg_version: '3.4' }
-    - { role: ../roles/capistrano_setup }
+    # - { role: ../roles/set_hostname, hostname: 'demo', domain: 'curationexperts.com' }
+    # - { role: ../roles/sshd_config }
+    # - { role: ../roles/setup_logrotation }
+    # - { role: ../roles/ruby, ruby_ver: '2.4.2', ruby_major_minor_ver: '2.4', ruby_sha_256: '93b9e75e00b262bc4def6b26b7ae8717efc252c47154abb7392e54357e6c8c9c' }
+    # - { role: ../roles/fedora, fedora_version: '4.7.1' }
+    # - { role: ../roles/solr, solr_version: '6.6.2' }
+    # - { role: ../roles/fits, fits_version: '0.8.4' }
+    # - { role: ../roles/postgres, postgres_pass: 'G{BkCZ7^fsDg2su' }
+    # - { role: ../roles/apache, passenger_ver: '5.1.11'}
+    # - { role: ../roles/imagemagick, imagemagick_ver: '7.0.7-9', gs_ver: '9.19', openjpg_ver: '2.1.0', libtiff_ver: '4.0.5', libpng_ver: '1.6.28' }
+    # - { role: ../roles/ffmpeg, ffmpeg_version: '3.4' }
+    # - { role: ../roles/capistrano_setup }

@@ -1,7 +1,9 @@
+[![Build Status](https://travis-ci.org/curationexperts/ansible-samvera.svg?branch=travis_build)](https://travis-ci.org/curationexperts/ansible-samvera)
+
 # ansible-samvera
 Prototype Configuration Management Scripts for Samvera based servers
 
-This repository provides predefined ansible roles to install and configure a typical set of dependencies 
+This repository provides predefined ansible roles to install and configure a typical set of dependencies
 required to run a Hyrax-based repository, including:
 
 * Solr

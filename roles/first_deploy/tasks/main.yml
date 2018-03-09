@@ -4,7 +4,7 @@
 #
 # Runs the first Capistrano managed deployment
 # Usage:
-#    - { role: first_deploy, project_name: *required*, branch: <optional> }
+#    - { role: first_deploy, project_name: *required*, project_owner: *required*, project_version: *required* }
 #
 # Does a minimal install of a codebase from development mode to bootstrap a capistrano deployment
 # The codebase being deployed must be capified and have a config/deploy/localhost.rb stage file
@@ -24,10 +24,6 @@
       - database.yml
       - secrets.yml
 
-- name: default repo name
-  set_fact:
-    default_repo_name: "https://github.com/curationexperts/{{ project_name }}.git"
-
 - name: remove any previously checked out git branch
   become: yes
   file:
@@ -36,13 +32,9 @@
 
 - name: clone repo
   git:
-      repo: "{{ repo_url | default(default_repo_name) }}"
+      repo: https://github.com/{{ project_owner }}/{{ project_name }}.git
       dest: /home/{{ ansible_ssh_user }}/{{ project_name }}
-
-- name: checkout branch
-  shell: git checkout {{ branch | default('master') }}
-  args:
-    chdir: /home/{{ ansible_ssh_user }}/{{ project_name }}
+      version: "{{ project_version }}"
 
 - name: install gems (bundle install)
   shell: bundle install
@@ -93,10 +85,35 @@
   become: true
   service: name=solr state=restarted
 
+- stat: path="/home/{{ ansible_ssh_user }}/{{ project_name }}/config/{{ item }}"
+  with_items:
+    - 'analytics.yml'
+    - 'blacklight.yml'
+    - 'browse_everything_providers.yml'
+    - 'fedora.yml'
+    - 'solr.yml'
+  register: st
+
+- name: copy config files
+  copy:
+    src: "{{ item.stat.path }}"
+    dest: '/opt/{{ project_name }}/shared/config/{{ item.item }}'
+    remote_src: yes
+    owner: deploy
+    group: deploy
+    mode: 0644
+  with_items: "{{ st.results }}"
+  when: item.stat.exists
+  become: yes
+
 - name: deploy to production directories with capistrano
-  shell: BRANCH={{ branch | default('master') }} cap localhost deploy
+  shell: cap -p --trace=stdout {{ cap_deployment }} deploy
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ project_name }}
+  environment:
+    PROJECT_OWNER: "{{ project_owner }}"
+    PROJECT_NAME: "{{ project_name }}"
+    BRANCH: "{{ project_version }}"
 
 - name: symlink schema from code to solr
   become: yes

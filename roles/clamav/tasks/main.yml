@@ -15,4 +15,5 @@
     - clamav-base
     - clamav-daemon
     - clamav-freshclam
+    - libclamav-dev
   when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
